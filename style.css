@@ -84,3 +84,26 @@ input:checked+.slider:before {
 #comments {
     display: none;
 } */
+
+
+/* 1. Hide the entire contents of the logo link (SVGs, Yoodles, and Icons) */
+ytd-topbar-logo-renderer #logo svg,
+ytd-topbar-logo-renderer #logo yt-icon,
+ytd-topbar-logo-renderer ytd-yoodle-renderer,
+ytd-topbar-logo-renderer #country-code {
+    display: none !important;
+    opacity: 0 !important;
+}
+
+
+ytd-topbar-logo-renderer a#logo {
+    background-image: url('https://raw.githubusercontent.com/itsdroid/YtFocusExtension/main/focus.png') !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: left center !important;
+    
+    margin-top: 10px;
+    min-width: 150px !important;
+    min-height: 40px !important;
+    display: flex !important;
+}

@@ -1,6 +1,7 @@
 function applyFocusMode(shouldEnabled) {
     let styleTag = document.getElementById("youtube-focus-style");
 
+
     if (shouldEnabled) {
         if (!styleTag) {
             styleTag = document.createElement("style");
@@ -33,3 +34,7 @@ chrome.runtime.onMessage.addListener((request) => {
         applyFocusMode(request.enabled);
     }
 });
+
+
+
+

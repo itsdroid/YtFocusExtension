@@ -10,6 +10,10 @@
         "js": ["content.js"],
         "run_at": "document_start"
     }],
+    "web_accessible_resources": [{
+    "resources": ["focus.png"],
+    "matches": ["https://www.youtube.com/*"]
+    }],
     "action": {
     "default_popup": "popup.html"
     }
