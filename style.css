@@ -1,0 +1,86 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "poppins" , "sans-serif";
+    /* letter-spacing: -0.05em; */
+}
+
+h1 {
+    font-size: 30px;
+    font-weight: 700;
+    
+}
+
+h3 {
+    font-size: 19px;
+    font-weight: 400;
+}
+
+.menu {
+    padding: 25px;
+}
+
+#MenuBtns {
+    margin-top: 40px;
+}
+
+
+
+/* Switch button styling */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked+.slider {
+    background-color: #2196F3;
+}
+
+input:checked+.slider:before {
+    transform: translateX(26px);
+}
+
+
+
+/* #secondary {
+    display: none;
+}
+
+#comments {
+    display: none;
+} */
