@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "YT Focus mode",
+    "version": 1.0,
+    "description": "The YT focus extension which allow users Removes distractions from YouTube.",
+    "permissions": ["storage"],
+    "content_scripts": [{
+        "matches": ["https://www.youtube.com/*"],
+        "css": "style.css",
+        "js": "content.js",
+        "run_at": "document_start"
+    }],
+    "action": {
+    "default_popup": "popup.html"
+    }
+}
