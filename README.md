@@ -6,7 +6,7 @@
 
 | Homepage Clean | Watch Page Focus | Control Menu |
 | :---: | :---: | :---: |
-| <img src="screenshots/screenshot1.png" width="400"> | <img src="screenshots/screenshot2.png" width="400"> | <img src="screenshots/screenshot3.png" width="200"> |
+| <img src="screenshots/Screenshot1.png" width="400"> | <img src="screenshots/Screenshot2.png" width="400"> | <img src="screenshots/Screenshot3.png" width="200"> |
 
 ---
 
