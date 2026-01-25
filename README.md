@@ -36,20 +36,21 @@ Enable Developer Mode (toggle in the top right corner).
 
 Click Load unpacked and select the folder containing these files.
 
-📁 Project Structure
-Plaintext
+## 📁 Project Structure
 
-├── icons/            # App icons (16, 48, 128)
-├── content.js        # Logic that hides elements on YouTube
-├── focus.png         # Logo for YouTube header replacement
-├── manifest.json     # Metadata and permissions
-├── popup.html        # UI for the extension menu
-├── popup.js          # Logic for toggles and storage sync
-└── style.css         # Styling for the popup UI
-⚙️ How It Works
+```text
+├── icons/           # App icons (16, 48, 128)
+├── content.js       # Logic that hides elements on YouTube
+├── focus.png        # Logo for YouTube header replacement
+├── manifest.json    # Metadata and permissions
+├── popup.html       # UI for the extension menu
+├── popup.js         # Logic for toggles and storage sync
+└── style.css        # Styling for the popup UI
+```
+
+## ⚙️ How It Works
 This extension utilizes a MutationObserver in content.js. Because YouTube is a Single Page Application (SPA), content changes dynamically without a full page refresh. The observer detects these changes and re-applies your focus settings instantly.
 
-📝 Permissions Used
+## 📝 Permissions Used
 storage: To save your toggle settings across sessions.
-
 activeTab: To communicate settings changes to the current YouTube tab.
