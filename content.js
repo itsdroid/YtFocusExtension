@@ -1,40 +1,40 @@
-function applyFocusMode(shouldEnabled) {
-    let styleTag = document.getElementById("youtube-focus-style");
+function applyFocusMode() {
+    chrome.storage.local.get([
+        'myCheckboxhomepage',
+        'myCheckboxcomments',
+        'myCheckboxsidebar',
+        'myCheckboxshorts'
+    ], (data) => {
+        
+        let oldStyle = document.getElementById('focus-mode-style');
+        if (oldStyle) oldStyle.remove();
 
+        let css = '';
 
-    if (shouldEnabled) {
-        if (!styleTag) {
-            styleTag = document.createElement("style");
-            styleTag.id = "youtube-focus-style";
-            styleTag.innerHTML = `
-                /* Hide Homepage Feed */
-                ytd-browse[page-subtype="home"] #primary,
-                ytd-rich-grid-renderer { 
-                    display: none !important; 
-                }
-
-                /* Hide Watch Page Sidebar & Comments */
-                #secondary, #comments { 
-                    display: none !important; 
-                }
-            `;
-            document.head.appendChild(styleTag);
+        if (data.myCheckboxhomepage) {
+            css += 'ytd-browse[page-subtype="home"] { display: none !important; }';
         }
-    } else {
-        if (styleTag) styleTag.remove();
-    }
+        if (data.myCheckboxcomments) {
+            css += '#comments { display: none !important; }';
+        }
+        if (data.myCheckboxsidebar) {
+            css += '#secondary { display: none !important; }';
+        }
+        if (data.myCheckboxshorts) {
+            css += 'ytd-reel-shelf-renderer, [title="Shorts"], ytd-mini-guide-entry-renderer[aria-label="Shorts"] { display: none !important; }';
+        }
+
+        const style = document.createElement('style');
+        style.id = 'focus-mode-style';
+        style.appendChild(document.createTextNode(css));
+        document.head.appendChild(style);
+    });
 }
 
-chrome.storage.local.get("enabled", (data) => {
-    applyFocusMode(data.enabled);
-});
+applyFocusMode();
 
 chrome.runtime.onMessage.addListener((request) => {
-    if (request.action === "toggleUI") {
-        applyFocusMode(request.enabled);
+    if (request.action === "update") {
+        applyFocusMode();
     }
 });
-
-
-
-

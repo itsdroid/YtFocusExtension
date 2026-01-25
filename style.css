@@ -1,42 +1,73 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 body {
     background-color: black;
     color: white;
-    font-family: "poppins" , "sans-serif";
-    /* letter-spacing: -0.05em; */
+    font-family: "Poppins", sans-serif;
+    width: 350px;
 }
 
-h1 {
-    font-size: 30px;
-    font-weight: 700;
-    
+#main-container {
+    width: 100%;
 }
 
-h3 {
-    font-size: 19px;
-    font-weight: 400;
+#focus-logo {
+    width: 100%;
+    display: block;
 }
 
 .menu {
-    padding: 25px;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h3 {
+    font-size: 14px;
+    font-weight: 400;
+    opacity: 0.8;
 }
 
 #MenuBtns {
-    margin-top: 40px;
+    margin-top: 20px;
+}
+
+h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 5px;
+}
+
+.btn-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1a1a1a;
+    margin-top: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: background 0.2s;
+}
+
+.btn-wrapper:hover {
+    background-color: #252525;
 }
 
 
-
-/* Switch button styling */
 .switch {
     position: relative;
-    display: inline-block;
-    width: 50px;
-    height: 24px;
+    width: 44px;
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .switch input {
@@ -45,65 +76,45 @@ h3 {
 
 .slider {
     position: absolute;
+    inset: 0;
+    background-color: #444;
+    transition: .3s;
+    border-radius: 22px;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    transition: .4s;
-    border-radius: 24px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 16px;
+    width: 16px;
     left: 3px;
     bottom: 3px;
     background-color: white;
-    transition: .4s;
+    transition: .3s;
     border-radius: 50%;
 }
 
-input:checked+.slider {
+input:checked + .slider {
     background-color: #2196F3;
 }
 
-input:checked+.slider:before {
-    transform: translateX(26px);
+input:checked + .slider:before {
+    transform: translateX(22px);
 }
 
 
-
-/* #secondary {
-    display: none;
-}
-
-#comments {
-    display: none;
-} */
-
-
-/* 1. Hide the entire contents of the logo link (SVGs, Yoodles, and Icons) */
 ytd-topbar-logo-renderer #logo svg,
 ytd-topbar-logo-renderer #logo yt-icon,
 ytd-topbar-logo-renderer ytd-yoodle-renderer,
 ytd-topbar-logo-renderer #country-code {
     display: none !important;
-    opacity: 0 !important;
 }
 
-
 ytd-topbar-logo-renderer a#logo {
-    background-image: url('https://raw.githubusercontent.com/itsdroid/YtFocusExtension/main/focus.png') !important;
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
-    background-position: left center !important;
-    
+    background: url('https://raw.githubusercontent.com/itsdroid/YtFocusExtension/main/focus.png') no-repeat left center / contain !important;
+    min-width: 120px !important;
+    min-height: 32px !important;
+    margin-left: 16px;
     margin-top: 10px;
-    min-width: 150px !important;
-    min-height: 40px !important;
-    display: flex !important;
 }
