@@ -4,7 +4,7 @@
 
 ## 📸 Preview
 
-| Homepage Clean | Watch Page Focus | Control Menu |
+| Homepage Clean | Watch Page Focus | Logo |
 | :---: | :---: | :---: |
 | <img src="screenshots/Screenshot1.png" width="400"> | <img src="screenshots/Screenshot2.png" width="400"> | <img src="screenshots/Screenshot3.png" width="200"> |
 
