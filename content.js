@@ -47,40 +47,53 @@ chrome.runtime.onMessage.addListener((request) => {
 
     const AD_UI_SELECTORS = [
         ".video-ads", ".ytp-ad-module", ".ytp-ad-overlay-container",
-        "#masthead-ad", "ytd-ad-slot-renderer"
+        "#masthead-ad", "ytd-ad-slot-renderer", ".ytp-ad-player-overlay"
     ];
 
     function instantSkip() {
         const video = document.querySelector('video');
         const adShowing = document.querySelector('.ad-showing, .ad-interrupting');
+        const skipBtn = document.querySelector(".ytp-ad-skip-button, .ytp-ad-skip-button-modern, .ytp-skip-ad-button");
 
-        // AGGRESSIVE: If an ad is active, skip to the end immediately
         if (adShowing && video) {
-            // 1. Mute to prevent audio "pops"
+            // 1. Mute and max speed
             video.muted = true;
-            // 2. Set playback speed to max (optional, adds extra insurance)
-            video.playbackRate = 16.0; 
-            // 3. Jump to the end
-            if (isFinite(video.duration)) {
-                video.currentTime = video.duration;
+            video.playbackRate = 16.0;
+
+            // 2. Aggressive Jump
+            // Instead of just video.duration, we use a large number to ensure it hits the limit
+            if (Number.isFinite(video.duration)) {
+                video.currentTime = video.duration - 0.1; // Jump to almost the end
             }
-            console.log("[Skipper] Ad detected: Fast-forwarding to end.");
+            
+            // 3. Force click the button if it's there
+            if (skipBtn) {
+                skipBtn.click();
+            }
+
+            // 4. NEW: If the video is paused at the end of an ad, force play
+            if (video.paused) {
+                video.play().catch(() => {}); 
+            }
+        } else if (video && video.playbackRate > 2) {
+            // RESTORE: If no ad is showing but playback is still 16x, reset it
+            video.playbackRate = 1.0;
+            video.muted = false;
         }
 
-        // STANDARD: Click any skip buttons that do pop up
-        const skipBtn = document.querySelector(".ytp-ad-skip-button, .ytp-ad-skip-button-modern");
-        if (skipBtn) skipBtn.click();
-
-        // COSMETIC: Hide the ad overlays so they don't flicker
+        // COSMETIC: Hide UI elements
         AD_UI_SELECTORS.forEach(s => {
-            const el = document.querySelector(s);
-            if (el) el.style.display = "none";
+            const elements = document.querySelectorAll(s);
+            elements.forEach(el => {
+                if (el.style.display !== "none") el.style.display = "none";
+            });
         });
     }
 
-    // React instantly to page changes
-    const observer = new MutationObserver(instantSkip);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
+    // Optimization: Use a faster check interval alongside the observer 
+    // to catch the "black screen" state transitions faster.
+    setInterval(instantSkip, 100);
 
-    instantSkip();
+    const observer = new MutationObserver(instantSkip);
+    observer.observe(document.body, { childList: true, subtree: true });
 })();
