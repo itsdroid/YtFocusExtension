@@ -7,7 +7,7 @@
     "permissions": ["storage", "activeTab"],
     "content_scripts": [{
         "matches": ["https://www.youtube.com/*"],
-        "css": ["style.css"],
+        "css": ["content.css"],
         "js": ["content.js"],
         "run_at": "document_start"
     }],
