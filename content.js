@@ -42,64 +42,79 @@ chrome.runtime.onMessage.addListener((request) => {
 
 
 // ad block logic
+
 (() => {
     "use strict";
 
-    const AD_UI_SELECTORS = [
-        ".video-ads", ".ytp-ad-module", ".ytp-ad-overlay-container",
-        "#masthead-ad", "ytd-ad-slot-renderer", ".ytp-ad-player-overlay"
+    // Only targeting video player ads to avoid messing up the Homepage UI
+    const PLAYER_AD_SELECTORS = [
+        ".video-ads", ".ytp-ad-module", ".ytp-ad-overlay-container", ".ytp-ad-player-overlay"
     ];
 
     function instantSkip() {
         const video = document.querySelector('video');
+        // Check for ad-active classes on the player container
         const adShowing = document.querySelector('.ad-showing, .ad-interrupting');
         const skipBtn = document.querySelector(".ytp-ad-skip-button, .ytp-ad-skip-button-modern, .ytp-skip-ad-button");
 
         if (adShowing && video) {
-            // 1. Mute and max speed
-            video.muted = true;
+            // 1. Mute and speed up
+            if (!video.muted) video.muted = true;
             video.playbackRate = 16.0;
 
-            // 2. Aggressive Jump
-            // Instead of just video.duration, we use a large number to ensure it hits the limit
-            if (Number.isFinite(video.duration)) {
-                video.currentTime = video.duration - 0.1; // Jump to almost the end
+            // 2. The "Smooth Jump"
+            // We check if duration is valid and jump slightly before the end 
+            // to allow the player's own logic to transition to the next video.
+            if (isFinite(video.duration) && video.currentTime < video.duration - 0.5) {
+                video.currentTime = video.duration - 0.1;
             }
             
-            // 3. Force click the button if it's there
+            // 3. Auto-click if button exists
             if (skipBtn) {
                 skipBtn.click();
             }
 
-            // 4. NEW: If the video is paused at the end of an ad, force play
+            // 4. Recovery: prevent the "infinite buffer" or "stuck blank"
             if (video.paused) {
-                video.play().catch(() => {}); 
+                video.play().catch(() => {});
             }
-        } else if (video && video.playbackRate > 2) {
-            // RESTORE: If no ad is showing but playback is still 16x, reset it
+        } 
+        
+        // 5. Restoration: Only reset if the ad classes are GONE
+        else if (video && video.playbackRate > 2 && !adShowing) {
             video.playbackRate = 1.0;
             video.muted = false;
         }
 
-        // COSMETIC: Hide UI elements
-        AD_UI_SELECTORS.forEach(s => {
+        // 6. Cosmetic: Only hide player-specific overlays
+        PLAYER_AD_SELECTORS.forEach(s => {
             const elements = document.querySelectorAll(s);
             elements.forEach(el => {
-                if (el.style.display !== "none") el.style.display = "none";
+                if (el && el.style.display !== "none") {
+                    el.style.display = "none";
+                }
             });
         });
     }
 
-    // Optimization: Use a faster check interval alongside the observer 
-    // to catch the "black screen" state transitions faster.
-    setInterval(instantSkip, 100);
+    // Faster interval for smoother catching of ad starts
+    const skipInterval = setInterval(instantSkip, 100);
 
-    const observer = new MutationObserver(instantSkip);
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Observer to handle dynamic player loads
+    const observer = new MutationObserver((mutations) => {
+        for (const mutation of mutations) {
+            if (mutation.addedNodes.length || mutation.type === 'attributes') {
+                instantSkip();
+            }
+        }
+    });
+
+    observer.observe(document.body, { 
+        childList: true, 
+        subtree: true,
+        attributes: true,
+        attributeFilter: ['class'] // Specifically watch for class changes like 'ad-showing'
+    });
 })();
-
-
-
-
 
 
