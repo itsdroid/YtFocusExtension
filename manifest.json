@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "YT Focus mode",
+    "short_name": "YT Focus",
+    "version": "1.0",
+    "description": "Removes distractions from YouTube.",
+    "permissions": ["storage", "activeTab"],
+    "content_scripts": [{
+        "matches": ["https://www.youtube.com/*"],
+        "css": ["style.css"],
+        "js": ["content.js"],
+        "run_at": "document_start"
+    }],
+    "icons": {
+    "16": "icons/logo16.png",
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+},
+    "web_accessible_resources": [{
+    "resources": ["focus.png"],
+    "matches": ["https://www.youtube.com/*"]
+    }],
+    "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/logo16.png"
+    }
+}

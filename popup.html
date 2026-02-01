@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <div id="main-container">
+
+        <div>
+            <img id="focus-logo" src="focus.png" alt="focus image">
+        </div>
+
+        <div class="menu">
+            <h1> Learn without distractions </h1>
+            <h3> A browser extension for Youtube™ </h3>
+            <h4 id=""> Status: <span id="statusText"> Loading... </span> </h4>
+
+            <div class="btn-wrapper" id="enable-all-btn">
+                <h3 class="disable-all-text"> Disable all </h3>
+                <label class="switch">
+                    <input id="myCheckbox" type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div id="MenuBtns">
+
+                <h2> Menu </h2>
+                <div class="btn-wrapper" id="disable-homepage-btn">
+                    <h3 class="disable-homepage-text"> Disable Homepage </h3>
+                    <label class="switch">
+                        <input id="myCheckboxhomepage" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="btn-wrapper" id="disable-comments-btn">
+                    <h3 class="disable-comments-text"> Disable Comments </h3>
+                    <label class="switch">
+                        <input id="myCheckboxcomments" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="btn-wrapper" id="disable-sidebar-btn">
+                    <h3 class="disable-sidebar-text"> Disable Side videos </h3>
+                    <label class="switch">
+                        <input id="myCheckboxsidebar" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="btn-wrapper" id="disable-shorts-btn">
+                    <h3 class="disable-shorts-text"> Disable short videos </h3>
+                    <label class="switch">
+                        <input id="myCheckboxshorts" type="checkbox">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+    <script src="popup.js"> </script>
+</body>
+
+</html>
