@@ -97,3 +97,9 @@ chrome.runtime.onMessage.addListener((request) => {
     const observer = new MutationObserver(instantSkip);
     observer.observe(document.body, { childList: true, subtree: true });
 })();
+
+
+
+
+
+
