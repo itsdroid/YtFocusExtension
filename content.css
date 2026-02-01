@@ -1,0 +1,43 @@
+ytd-topbar-logo-renderer #logo svg,
+ytd-topbar-logo-renderer #logo yt-icon,
+ytd-topbar-logo-renderer ytd-yoodle-renderer,
+ytd-topbar-logo-renderer #country-code {
+    display: none !important;
+}
+
+ytd-topbar-logo-renderer a#logo {
+    background: url('https://raw.githubusercontent.com/itsdroid/YtFocusExtension/main/focus.png') no-repeat left center / contain !important;
+    min-width: 120px !important;
+    min-height: 32px !important;
+    margin-left: 16px;
+    margin-top: 10px;
+}
+
+
+/* hiding shorts and ads */
+
+/* homepage shorts */
+#dismissible.ytd-rich-shelf-renderer {
+    display: hidden !important;
+}
+
+/* hide unwanted suggestions */
+.ytd-exploratory-results-renderer.ytd-item-section-renderer, ytd-horizontal-card-list-renderer.ytd-item-section-renderer:not(:first-child), ytd-reel-shelf-renderer.ytd-item-section-renderer, grid-shelf-view-model.ytd-item-section-renderer, ytd-shelf-renderer.ytd-item-section-renderer {
+    display: none !important;
+}
+
+
+/* hide shorts from the search suggestions */
+.ytd-counterfactual-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-rich-list-header-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-shelf-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-rich-shelf-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-inline-survey-renderer.ytd-rich-section-renderer[is-dismissed] {
+    display: none !important;
+}
+
+
+/* hide the homepage ad */
+#masthead-ad {
+    display: none !important;
+}
+
+#dismissible {
+    display: none !important;
+}
