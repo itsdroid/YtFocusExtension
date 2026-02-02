@@ -14,9 +14,7 @@ ytd-topbar-logo-renderer a#logo {
 }
 
 
-/* hiding shorts and ads */
-
-
+/* hiding shorts */
 /* hide unwanted suggestions */
 .ytd-exploratory-results-renderer.ytd-item-section-renderer, ytd-horizontal-card-list-renderer.ytd-item-section-renderer:not(:first-child), ytd-reel-shelf-renderer.ytd-item-section-renderer, grid-shelf-view-model.ytd-item-section-renderer, ytd-shelf-renderer.ytd-item-section-renderer {
     display: none !important;
@@ -26,3 +24,4 @@ ytd-topbar-logo-renderer a#logo {
 .ytd-counterfactual-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-rich-list-header-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-shelf-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-rich-shelf-renderer.ytd-rich-section-renderer, #content.ytd-rich-section-renderer>ytd-inline-survey-renderer.ytd-rich-section-renderer[is-dismissed] {
     display: none !important;
 }
+

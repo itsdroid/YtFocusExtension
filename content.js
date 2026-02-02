@@ -43,78 +43,78 @@ chrome.runtime.onMessage.addListener((request) => {
 
 // ad block logic
 
-(() => {
-    "use strict";
 
-    // Only targeting video player ads to avoid messing up the Homepage UI
-    const PLAYER_AD_SELECTORS = [
-        ".video-ads", ".ytp-ad-module", ".ytp-ad-overlay-container", ".ytp-ad-player-overlay"
-    ];
+setInterval(() => {
+    let currentPageUrl = window.location.href;
+    let adVideoContainer = document.querySelector("#ad-video-container");
+    let skipButton = document.querySelector(".ytp-ad-skip-button");
+    let itemSections = document.querySelectorAll(".style-scope ytd-item-section-renderer");
+    let adShowingPlayer = document.querySelector(".html5-video-player.ad-showing");
 
-    function instantSkip() {
-        const video = document.querySelector('video');
-        // Check for ad-active classes on the player container
-        const adShowing = document.querySelector('.ad-showing, .ad-interrupting');
-        const skipBtn = document.querySelector(".ytp-ad-skip-button, .ytp-ad-skip-button-modern, .ytp-skip-ad-button");
+    document.querySelector("ytd-rich-item-renderer ytd-display-ad-renderer") &&
+        (document.querySelector("ytd-rich-item-renderer ytd-display-ad-renderer")
+            .parentElement.parentElement.style.display = "none");
 
-        if (adShowing && video) {
-            // 1. Mute and speed up
-            if (!video.muted) video.muted = true;
-            video.playbackRate = 16.0;
+    document.querySelector("ytd-player-legacy-desktop-watch-ads-renderer") &&
+        (document.querySelector("ytd-player-legacy-desktop-watch-ads-renderer").style.display = "none");
 
-            // 2. The "Smooth Jump"
-            // We check if duration is valid and jump slightly before the end 
-            // to allow the player's own logic to transition to the next video.
-            if (isFinite(video.duration) && video.currentTime < video.duration - 0.5) {
-                video.currentTime = video.duration - 0.1;
-            }
-            
-            // 3. Auto-click if button exists
-            if (skipBtn) {
-                skipBtn.click();
-            }
+    document.querySelector("#player-ads") &&
+        (document.querySelector("#player-ads").style.display = "none");
 
-            // 4. Recovery: prevent the "infinite buffer" or "stuck blank"
-            if (video.paused) {
-                video.play().catch(() => {});
-            }
-        } 
-        
-        // 5. Restoration: Only reset if the ad classes are GONE
-        else if (video && video.playbackRate > 2 && !adShowing) {
-            video.playbackRate = 1.0;
-            video.muted = false;
-        }
+    document.querySelector(".ytp-ad-image-overlay") &&
+        (document.querySelector(".ytp-ad-image-overlay").getAttribute("display") != "none")
+            ? document.querySelector(".ytp-ad-image-overlay").style.display = "none"
+            : "";
 
-        // 6. Cosmetic: Only hide player-specific overlays
-        PLAYER_AD_SELECTORS.forEach(s => {
-            const elements = document.querySelectorAll(s);
-            elements.forEach(el => {
-                if (el && el.style.display !== "none") {
-                    el.style.display = "none";
+    document.querySelector(".ytp-ad-text-overlay") &&
+        (document.querySelector(".ytp-ad-text-overlay").getAttribute("display") != "none")
+            ? document.querySelector(".ytp-ad-text-overlay").style.display = "none"
+            : "";
+
+    document.querySelector("#player-ads") &&
+        ((document.querySelector("#player-ads").getAttribute("display") != "none")
+            ? document.querySelector("#player-ads").style.display = "none"
+            : "");
+
+    if (itemSections) {
+        if (itemSections.length > 0) {
+            for (let index = 0; index < itemSections.length; index++) {
+                if (itemSections[index].querySelector("#sitelinks-table")) {
+                    itemSections[index].getAttribute("display") != "none" &&
+                        (itemSections[index].style.display = "none");
                 }
-            });
-        });
+            }
+        }
     }
 
-    // Faster interval for smoother catching of ad starts
-    const skipInterval = setInterval(instantSkip, 100);
-
-    // Observer to handle dynamic player loads
-    const observer = new MutationObserver((mutations) => {
-        for (const mutation of mutations) {
-            if (mutation.addedNodes.length || mutation.type === 'attributes') {
-                instantSkip();
+    if (adShowingPlayer) {
+        if (skipButton) {
+            skipButton.click();
+        } else {
+            let videoElement = adShowingPlayer.querySelector("video");
+            if (videoElement) {
+                videoElement.currentTime = isNaN(videoElement.duration)
+                    ? 0
+                    : videoElement.duration;
             }
         }
-    });
+    }
 
-    observer.observe(document.body, { 
-        childList: true, 
-        subtree: true,
-        attributes: true,
-        attributeFilter: ['class'] // Specifically watch for class changes like 'ad-showing'
-    });
-})();
+    if (currentPageUrl.includes("hotstar.com")) {
+        if (adVideoContainer && adVideoContainer.checkVisibility()) {
+            let hotstarVideo = adVideoContainer.querySelector("video");
+            if (hotstarVideo) {
+                hotstarVideo.currentTime = isNaN(hotstarVideo.duration)
+                    ? 0
+                    : hotstarVideo.duration;
+            }
+        }
+    }
+}, 250);
+
+
+
+
+
 
 
