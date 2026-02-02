@@ -29,7 +29,8 @@ If you want to run this extension locally:
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/your-username/yt-focus-mode.git](https://github.com/your-username/yt-focus-mode.git)
+   git clone https://github.com/itsdroid/YtFocusExtension.git
+
 Open Google Chrome and go to chrome://extensions/.
 
 Enable Developer Mode (toggle in the top right corner).
