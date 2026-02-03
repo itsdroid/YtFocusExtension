@@ -115,6 +115,24 @@ setInterval(() => {
 
 
 
+// Function to find and click the skip button
+const skipAd = () => {
+    // YouTube uses several classes for skip buttons; these are the most common
+    const skipButton = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern');
+    
+    if (skipButton) {
+        skipButton.click();
+        console.log("Gemini: Ad skipped!");
+    }
+};
 
+// Create an observer to watch for changes in the video player
+const observer = new MutationObserver(() => {
+    skipAd();
+});
 
-
+// Start observing the body of the page for added elements
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
